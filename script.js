@@ -18,6 +18,7 @@ const player2 = player("O","circle");
 let board = gameBoard.gameboard;
 
 const game =(() =>{
+    let winner = 0;
     let pPlayer;
     let counter;
     const winningConditions = [
@@ -32,7 +33,7 @@ const game =(() =>{
      ];
     //checks previous player and changes next player
     const play = (cPlayer,i) =>{
-        if (board[i-1]===""){
+        if (board[i-1]==="" && winner!=1){
             if (pPlayer === player1){
                 cPlayer = player2;
             }
@@ -44,10 +45,11 @@ const game =(() =>{
             displayBoard(board)
             winCheck(cPlayer);
             pPlayer = cPlayer;
+            }
         }
-    }
     const winCheck = (cPlayer) => { 
         for(let j=0;j<8;j++){
+            if(winner!=1){
             let winCondition=winningConditions[j];
             const a = board[winCondition[0]];
             const b = board[winCondition[1]];
@@ -58,9 +60,11 @@ const game =(() =>{
             if (a === b && b === c) {
                 console.log(`${cPlayer.currentPlayer} won!`)
                 displayWinner(cPlayer)
+                winner=1;
                 break;
               }
             }
+        }
     }
     const displayWinner = (cPlayer) =>{
         const winner = document.createElement('h1')

@@ -45,6 +45,7 @@ const game =(() =>{
             displayBoard(board)
             winCheck(cPlayer);
             pPlayer = cPlayer;
+            checkDraw();
             }
         }
     const winCheck = (cPlayer) => { 
@@ -66,10 +67,24 @@ const game =(() =>{
             }
         }
     }
+    //displays winner
     const displayWinner = (cPlayer) =>{
         const winner = document.createElement('h1')
         winner.textContent=(`${cPlayer.currentPlayer} won!`)
         header.appendChild(winner);
+    }
+    //displays if draw
+    const checkDraw = () =>{
+        if (winner!=1){
+        for(let i=0;i<9;i++){
+            if(board[i]=="") break;
+            if(i==8){
+                const winner = document.createElement('h1')
+                winner.textContent=(`draw !`)
+                header.appendChild(winner);
+            }
+        }
+    }
     }
     //assign click events on grid squares
     const playRound = (cPlayer) =>{

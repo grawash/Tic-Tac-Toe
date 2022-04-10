@@ -1,5 +1,9 @@
 const body = document.querySelector('body')
 const header = document.querySelector('.header')
+let modal = document.querySelector(".modal")
+let reset = document.querySelector(".reset")
+//reset.addEventListener('click', () => {modal.style.display='block';})
+
 //creates gameBoard object
 const gameBoard=(() =>{
     let gameboard= ["","","","","","","","",""];
@@ -102,6 +106,18 @@ const game =(() =>{
             i++;
         })
     }
+    function clear(){
+        for(let i=0;i<9;i++){
+            board[i]="";
+        }
+        cPlayer=player1;
+        displayBoard(board);
+        if(winner==1){
+            winner = 0;
+            header.removeChild(header.lastElementChild);
+        }
+    }
+    reset.addEventListener('click', () => {clear();})
     return{playRound};
 })();
 game.playRound(player1)

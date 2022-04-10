@@ -24,7 +24,7 @@ let board = gameBoard.gameboard;
 const game =(() =>{
     let winner = 0;
     let pPlayer;
-    let counter;
+    let draw = 0;
     const winningConditions = [
         [0, 1, 2],
         [3, 4, 5],
@@ -86,6 +86,7 @@ const game =(() =>{
                 const winner = document.createElement('h1')
                 winner.textContent=(`draw !`)
                 header.appendChild(winner);
+                draw = 1;
             }
         }
     }
@@ -96,6 +97,7 @@ const game =(() =>{
         squares.forEach(item =>{
             item.addEventListener('click', e => {console.log(board[item.id-1]); play(cPlayer,item.id)});
         })
+        reset.addEventListener('click', () => {clear(cPlayer);})
     }
     //displays board content
     const displayBoard = (arr) => {
@@ -106,18 +108,20 @@ const game =(() =>{
             i++;
         })
     }
-    function clear(){
+    function clear(cPlayer){
         for(let i=0;i<9;i++){
             board[i]="";
         }
         cPlayer=player1;
+        pPlayer=undefined;
+        playRound(player1);
         displayBoard(board);
-        if(winner==1){
+        if(winner==1 || draw == 1){
             winner = 0;
+            draw = 0;
             header.removeChild(header.lastElementChild);
         }
     }
-    reset.addEventListener('click', () => {clear();})
     return{playRound};
 })();
 game.playRound(player1)

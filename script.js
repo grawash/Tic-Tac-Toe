@@ -2,7 +2,9 @@ const body = document.querySelector('body')
 const header = document.querySelector('.header')
 let modal = document.querySelector(".modal")
 let reset = document.querySelector(".reset")
-//reset.addEventListener('click', () => {modal.style.display='block';})
+let playerChoice = document.querySelector(".player")
+let computerChoice = document.querySelector(".ai")
+let start = document.querySelector(".start")
 
 //creates gameBoard object
 const gameBoard=(() =>{
@@ -25,6 +27,7 @@ const game =(() =>{
     let winner = 0;
     let pPlayer;
     let draw = 0;
+    let ai=0;
     const winningConditions = [
         [0, 1, 2],
         [3, 4, 5],
@@ -52,6 +55,7 @@ const game =(() =>{
             checkDraw();
             }
         }
+    //checks if someone won
     const winCheck = (cPlayer) => { 
         for(let j=0;j<8;j++){
             if(winner!=1){
@@ -95,12 +99,17 @@ const game =(() =>{
     const playRound = (cPlayer) =>{
         let squares = document.querySelectorAll(".square")
         squares.forEach(item =>{
-            item.addEventListener('click', e => {console.log(board[item.id-1]); play(cPlayer,item.id)});
+                item.addEventListener('click', e => {
+                    if(ai==1 && board[item.id-1]==""){console.log(board[item.id-1]); play(cPlayer,item.id); aiPlay(cPlayer)}
+                    else{console.log(board[item.id-1]); play(cPlayer,item.id);}
+            });
         })
-        reset.addEventListener('click', () => {clear(cPlayer);})
+        reset.addEventListener('click', () => {modal.style.display="block";})
+        start.addEventListener('click', () => {clear(cPlayer); modal.style.display="none"})
     }
     //displays board content
     const displayBoard = (arr) => {
+        console.log(ai)
         let i = 0;
         arr.forEach(element => {
             let squares = document.querySelectorAll(".square")
@@ -114,7 +123,7 @@ const game =(() =>{
         }
         cPlayer=player1;
         pPlayer=undefined;
-        playRound(player1);
+        //playRound(player1);
         displayBoard(board);
         if(winner==1 || draw == 1){
             winner = 0;
@@ -122,8 +131,18 @@ const game =(() =>{
             header.removeChild(header.lastElementChild);
         }
     }
+    //ai play logic
+    const aiPlay = (cPlayer) => {
+        let tempArr = [];
+        for(let i=0;i<9;i++){
+            if(board[i] == ""){tempArr.push(i+1);}
+        }
+        play(cPlayer,tempArr[Math.floor(Math.random()*tempArr.length)]);
+        console.log(tempArr)
+    }
+    //adds click events on choice options. determines if game is VS human/AI
+    playerChoice.addEventListener('click', () => {playerChoice.classList.add("chosen"); computerChoice.classList.remove("chosen"); ai=0;})
+    computerChoice.addEventListener('click', () => {computerChoice.classList.add("chosen"); playerChoice.classList.remove("chosen"); ai=1;})
     return{playRound};
 })();
 game.playRound(player1)
-
-

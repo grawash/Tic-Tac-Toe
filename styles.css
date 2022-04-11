@@ -58,6 +58,40 @@ body{
     gap: 10px;
 
 }
+.choice{
+    display: flex;
+}
+.choose{
+    margin:30px;
+    padding:20px;
+    border-radius: 50%;
+}
+.choose:hover{
+    /* background-color: rgba(53, 51, 51, 0.349); */
+    max-height: 500px;
+    max-width: 700px;
+    cursor: pointer;
+}
+.choiceIcon{
+    max-height: 200px;
+    max-width: 200px;
+}
+.chosen{
+    background-color: rgba(39, 177, 39, 0.849);
+}
+.start{
+    margin-top: 20px;
+    width: 150px;
+    height: 50px;
+    font-size: 2rem;
+    background-color: rgba(39, 177, 39, 0.849);
+    border-radius: 30px;
+    border: none;
+}
+.start:hover{
+    box-shadow: 0px 3px 10px rgba(53, 56, 56, 0.596);
+    cursor: pointer;
+}
 .square{
     display: grid;
     align-items: center;
